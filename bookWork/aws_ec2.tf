@@ -64,6 +64,15 @@ resource "null_resource" "provisioner" {
       "echo \"deb https://apt.kubernetes.io/ kubernetes-xenial main\" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list",
       "sudo apt-get update",
       "sudo apt-get install -y kubectl",
+      #eksctlコマンドinstall
+      "curl \"https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip\" -o \"awscliv2.zip\"",
+      "sudo apt-get install -y unzip",
+      "unzip awscliv2.zip",
+      "sudo ./aws/install",
+      "pip3 install --upgrade --user awscli",
+      "curl --silent --location \"https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz\" | tar xz -C /tmp",
+      "sudo mv /tmp/eksctl /usr/local/bin"
+      # next =>aws configure(add AWS Access Key ID and AWS Secret Access Key)
     ]
   }
 }
