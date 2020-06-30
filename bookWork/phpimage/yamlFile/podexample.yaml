@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+    - name: my-container
+      image: junwatanabe/myexample
+      ports:
+        - containerPort: 80
+  imagePullSecrets:
+    - name: mysecret

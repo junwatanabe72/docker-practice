@@ -3,7 +3,7 @@ variable "ami" {
  }
  
 variable "instance_type" {
-    default = "t2.micro"
+    default = "t3.small"
  }
 
 variable "key_path" {

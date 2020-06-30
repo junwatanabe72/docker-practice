@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+        - name: my-container
+          image: junwatanabe/myexample:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: my-volume-storage
+            mountPath: /var/data
+      imagePullSecrets:
+        - name: mysecret
+      volumes:
+        - name: my-volume-storage
+          persistentVolumeClaim:
+            claimName: my-volume-claim

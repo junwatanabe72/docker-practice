@@ -43,7 +43,7 @@ resource "null_resource" "provisioner" {
     inline = [
       #dockerをインストールするコマンド
       "sudo apt-get -y update",
-      "sudo apt-get -y install apt-transport-https ca-certificates curl gnupg-agent software-properties-common python3 python3-pip",
+      "sudo apt-get -y install apt-transport-https ca-certificates curl gnupg-agent gnupg2 software-properties-common python3 python3-pip",
       "sudo pip3 install docker-compose",
       "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -",
       "sudo apt-key fingerprint 0EBFCD88",
@@ -51,7 +51,19 @@ resource "null_resource" "provisioner" {
       "sudo apt-get -y update",
       "sudo apt-get -y install docker-ce docker-ce-cli containerd.io",
       #dockerコマンドをsudoなしで使用する。
-      "sudo gpasswd -a ubuntu docker"
+      "sudo gpasswd -a ubuntu docker",
+      #minikube
+      "sudo apt-get -y install conntrack",
+      "sudo curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64",
+      "sudo install minikube-linux-amd64 /usr/local/bin/minikube",
+      "sudo minikube start --vm-driver=none",
+      #所有者変更
+      "sudo chown -R $USER $HOME/.kube $HOME/.minikube",
+      #kubectlコマンドinstall
+      "curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -",
+      "echo \"deb https://apt.kubernetes.io/ kubernetes-xenial main\" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list",
+      "sudo apt-get update",
+      "sudo apt-get install -y kubectl",
     ]
   }
 }
