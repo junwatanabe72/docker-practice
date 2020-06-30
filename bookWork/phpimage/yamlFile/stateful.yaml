@@ -40,6 +40,8 @@ spec:
               mountPath: /var/data
             - name: my-volume-session
               mountPath: /var/lib/php/sessions
+      imagePullSecrets:
+        - name: mysecret
       volumes:
         - name: my-volume-storage
           persistentVolumeClaim:
@@ -54,5 +56,4 @@ spec:
           requests:
             storage: 1Mi
         storageClassName: standard
-    imagePullSecrets:
-      - name: mysecret
+    
